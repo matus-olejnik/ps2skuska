@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>PShit2</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        :root {
+            --correct-color: #39da5e;
+            --maybe-correct-color: #ffc941;
+            --maybe-incorrect-color: #fa616f;
+            --wtf-color: #a78585;
+        }
+
+        #search-input {
+            width: 100%;
+        }
+
+        body {
+            padding-top: 4.5rem
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        img {
+            max-height: 600px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            /*background-color: black;*/
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: black solid 2px;
+        }
+
+        table tr.even.new {
+            background-color: #d7d6d6;
+        }
+
+        table tr.odd.new {
+            background-color: #88eee4;
+        }
+
+        tr:nth-child(even).new {
+            background-color: #d7d6d6;
+        }
+
+        tr:nth-child(odd).new {
+            background-color: #88eee4;
+        }
+
+        table tr.even {
+            background-color: #a7a7a7;
+        }
+
+        table tr.odd {
+            background-color: #67c9bf;
+        }
+
+        tr:nth-child(even) {
+            background-color: #a7a7a7;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #67c9bf;
+        }
+
+        /*td::first-line {*/
+        /*    font-weight: 700;*/
+        /*}*/
+
+        footer {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            padding-bottom: 2px;
+            /*width: 100%;*/
+            /*height: 30px;*/
+            background-color: white;
+            z-index: 1030;
+        }
+
+        .form-inline {
+            width: 100%;
+        }
+
+        mark {
+            background-color: yellow;
+            color: black;
+            padding: 0;
+        }
+
+        .question {
+            margin-bottom: 5px;
+        }
+
+        .answer {
+            margin-top: 10px;
+            font-size: 25px;
+            padding: 5px;
+        }
+
+        .answer button {
+            float: right;
+            margin-top: -1px;
+        }
+
+        .correct {
+            background-color: var(--correct-color);
+        }
+
+        .maybe-correct {
+            background-color: var(--maybe-correct-color);
+        }
+
+        .maybe-incorrect {
+            background-color: var(--maybe-incorrect-color);
+        }
+
+        .wtf {
+            background-color: var(--wtf-color);
+        }
+
+        label {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-light bg-dark">
+    <form class="form-inline">
+        <div id="normalize-check-box-wrapper" class="col-sm-2">
+            <label for="normalize-check-box">
+                <input id="normalize-check-box" class="form-control mr-sm-2" type="checkbox" aria-label="Normalizovať text">
+                Normalizovať
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <input id="search-input" class="form-control mr-sm-2" type="search"
+                    placeholder="Hľadať (filtrovanie začne pri dĺžke > 3, ESC - zrušiť)" aria-label="Search">
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
+        </div>
+    </form>
+</nav>
+<main class="container">
+    <table>
+        <tbody id="main-table">
+        <tr class="new">
+            <!--        TEST 1 START -->
+            <td>
+                <div class="question">V prípade, že opad sily signálu je modelovaný pomocou modelu Free space, potom vo vzdialenosti 100m je sila signálu:</div>
+                <div class="answer correct">
+                    nižšia a nemenná
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Exponenciálne čakanie vyžaduje, že nová hodnota čakania je:</div>
+                <div class="answer correct">
+                    náhodná z intervalu CW_min a CW_max, pričom hodnota CW_max sa zdvojnásobí po každom neúspešnom prístupe k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme RTS/CTS?</div>
+                <div class="answer correct">
+                    pre zníženie pravdepodobnosti kolízie pri posielaní dátových paketov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme MAC protokol?</div>
+                <div class="answer correct">
+                    pre riadenie prístupu k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo nastane, ak uzol nikdy neprijme CTS?</div>
+                <div class="answer correct">
+                    dátový paket vo fronte bude zmazaný
+                </div>
+                <div class="answer correct">
+                    Exponenciálne čakanie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">-30 dBm je v prepočte na mW alebo W: </div>
+                <div class="answer correct">
+                    menej ako 1mW <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Maximálne d2-párovanie je:</div>
+                <div class="answer correct">
+                    množina párov uzlov, ktoré môžu súčastne komunikovať v prípade, že je použitý mechanizmus RTS/CTS
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Priemer grafu so zvyšujúcim výkonom vysielača:</div>
+                <div class="answer correct">
+                    ostáva rovnaký alebo sa znižuje
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TDMA má v prípade použitia pre ad hoc siete nevýhodu:</div>
+                <div class="answer correct">
+                    je potrebné poznať počet uzlov, ktoré pristupujú k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">d2-párovanie má vlastnosť, že koncové uzly hrán majú vzájomnú vzdialenosť:</div>
+                <div class="answer correct">
+                    aspoň 2 hrany
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 1 END -->
+        <!--        TEST 2 START -->
+        <tr class="new">
+            <td>
+                <div class="question">Poissonov proces generuje udalosti, pričom čas medzi udalosťami má rozdelenie:</div>
+                <div class="answer correct">
+                    exponenciálne
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Quad-strom (quad tree) sa v sieťových simulátoroch využíva na:</div>
+                <div class="answer correct">
+                    hľadanie uzlov, ktoré sú v dosahu signálu iného uzla
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Spomaľovanie uzlov v modeli Random waypoint je spôsobené:</div>
+                <div class="answer correct">
+                    zvolením vzdialeného cieľa a zároveň nízkej rýchlosti
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak modelujeme závislosť sily signálu od vzdialenosti pomocou free-space modelu, sila signálu so vzdialenosťou pri 5Ghz frekvencii v porovnaní s 2.4GHz opadá:</div>
+                <div class="answer correct">
+                    viac
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Príkladom protokolu na spojovej (data link) vrstve je:</div>
+                <div class="answer correct">
+                    TDMA
+                </div>
+                <div class="answer correct">
+                    CSMA
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Lindy efekt znamená, že:</div>
+                <div class="answer correct">
+                    početnosť zlyhaní sa znižuje s časom
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Výpočet vzdialenosti uzlov pomocou lineárneho hľadania je:</div>
+                <div class="answer correct">
+                    neefektívny, pretože je potrebný výpočet vzdialenosti pre každú dvojicu uzlov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V protokole IEEE 802.11 je mechanizmus RTS/CTS použitý:</div>
+                <div class="answer correct">
+                    podľa nastavenia
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Zisk izotropnej antény je:</div>
+                <div class="answer correct">
+                    0 dB
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Zisk smerovej antény v porovnaní s izotropnou anténou môže byť:</div>
+                <div class="answer correct">
+                    vyšší, nižší alebo rovnaký
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 2 END-->
+        <!--        TEST 3 START-->
+        <tr class="new">
+            <td>
+                <div class="question">AODV protokol je:</div>
+                <div class="answer correct">
+                    reaktívny, hop-by-hop, distance-vector protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">RREQ (AODV) je posielaný cez:</div>
+                <div class="answer correct">
+                    broadcast
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">HELLO je v AODV implementovaný ako (https://tools.ietf.org/html/rfc3561#section-6.9):</div>
+                <div class="answer correct">
+                    RREP paket
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">HELLO posiela (https://tools.ietf.org/html/rfc3561#section-6.9):</div>
+                <div class="answer correct">
+                    len uzol na aktívnej ceste
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">HELLO paket má ako cieľovú adresu nastavenú (https://tools.ietf.org/html/rfc3561#section-6.9):</div>
+                <div class="answer correct">
+                    vlastnú adresu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade, že na prvý poslaný RREQ nepríde žiadna odpoveď vo forme RREP nastane:</div>
+                <div class="answer correct">
+                    opätovné poslanie RREQ, pričom sa prenastaví TTL
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">RERR je poslaný cez (https://tools.ietf.org/html/rfc3561#section-6.11):</div>
+                <div class="answer correct">
+                    broadcast alebo unicast
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Promiscuous mode umožňuje:</div>
+                <div class="answer correct">
+                    prepočutie paketov v dosahu šírenia signálu z iných uzlov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Anycast je:</div>
+                <div class="answer correct">
+                    smerovanie k najbližšiemu zo skupiny, ktorý ponúka tú istú službu ako ostatné uzly
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Convergecast je možné implementovat pomocou (https://www.cs.yale.edu/homes/aspnes/pinewiki/ConvergeCast.html):</div>
+                <div class="answer correct">
+                    kostry grafu
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 3 END-->
+        <!--        TEST 4 START-->
+        <tr class="new">
+            <td>
+                <div class="question">Vyššia referenčná hladina je v protokole TORA nastavená, ak:</div>
+                <div class="answer correct">
+                    uzol stratí všetky doleprúdové linky
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri použití protokolu TORA po strate poslednej doleprúdovej linky zmení uzol orientáciu (uvažujeme len linky k susedným uzlom):</div>
+                <div class="answer correct">
+                    všetkých liniek
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri použití protokolu TORA je pre detekciu izolovaného komponentu (ktorý má aspoň 2 uzly) siete potrebné zmeniť orientáciu každej linky:</div>
+                <div class="answer correct">
+                    2-krát
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">UPD paket protokolu TORA je posielaný cez:</div>
+                <div class="answer correct">
+                    broadcast
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri výpočte smerovania je pri použití protokolu TORA potrebná:</div>
+                <div class="answer correct">
+                    1 inštancia protokolu pre každý štartovací a cieľový uzol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sublevel (delta to reference level) je pri použití protokolu TORA zmenený:</div>
+                <div class="answer correct">
+                    po zmene orientácie hrany, potom ako susedný uzol zvýši svoju referenčnú hladinu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Počítanie donekonečna môže nastať v prípade distance-vector smerovania, pretože uzol (https://en.wikipedia.org/wiki/Distance-vector_routing_protocol#Count-to-infinity_problem):</div>
+                <div class="answer correct">
+                    po získaní cesty nevie, či nie je súčasťou tejto cesty
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Nevýhodou formovania zhluku uzlov s lídrom je:</div>
+                <div class="answer correct">
+                    potreba rotovať lídra tak, aby spotreba energie bola rovnomerne rozložená medzi uzly
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">GOSSIP1 protokol:</div>
+                <div class="answer correct">
+                    preposiela RREQ s pravdepodobnosťou p
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">AODV pri smerovaní slučky:</div>
+                <div class="answer correct">
+                    vytvára
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 4 END-->
+        <!--        TEST 5 STARTR-->
+        <tr class="new">
+            <td>
+                <div class="question">Počas "slow start" sa veľkosť okna zahltenia zväčšuje (https://tools.ietf.org/html/rfc2001):</div>
+                <div class="answer correct">
+                    exponenciálne
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Počas "congestion avoidance" sa veľkosť okna zahltenia zväčšuje (https://tools.ietf.org/html/rfc2001):</div>
+                <div class="answer correct">
+                    lineárne
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Po dosiahnutí zahltenia, veľkosť okna zahltenia (https://tools.ietf.org/html/rfc2001):</div>
+                <div class="answer correct">
+                    sa zmenší
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri "fast retransmit" je paket opätovne poslaný po prijatí (https://tools.ietf.org/html/rfc2001):</div>
+                <div class="answer correct">
+                    tretieho duplicitného ACK
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri "fast recovery" je veľkosť okna zahltenia prenastavená na (https://tools.ietf.org/html/rfc2001):</div>
+                <div class="answer correct">
+                    slow start threshold + 3
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri "fast recovery" je "slow start threshold" prenastavené na (https://tools.ietf.org/html/rfc2001):</div>
+                <div class="answer correct">
+                    1/2 veľkosti okna zahltenia, ale nie menej ako 2
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade použitia UDP, ak nie je paket doručený cieľovému uzlu:</div>
+                <div class="answer correct">
+                    paket nebude opätovne poslaný
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri "tail drop" sú z paketovej fronty zmazané:</div>
+                <div class="answer correct">
+                    posledných n paketov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">RED využíva pre odhad priemerného počtu paketov v paketovej fronte:</div>
+                <div class="answer correct">
+                    exponenciálne vážený kĺzavý priemer
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade, že počet paketov v paketovej fronte je medzi min a max, potom RED zmaže:</div>
+                <div class="answer correct">
+                    náhodne vybrané prichádzajúce pakety
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 5 END-->
+        <!--        TEST 6 START-->
+        <tr class="new">
+            <td>
+                <div class="question">Multicastová skupina je množina zariadení, ktoré:</div>
+                <div class="answer correct">
+                    prijímajú pakety posielané na adresu tejto multicastovej skupiny
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Multicast strom v AODV:</div>
+                <div class="answer correct">
+                    môže obsahovať aj zariadenia, ktoré nie sú členom žiadnej multicastovej skupiny
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Cesta k multicastovej skupine sa pri použití AODV hľadá pomocou:</div>
+                <div class="answer correct">
+                    RREQ s nastaveným príznakom J
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MACT je v AODV potrebný pre:</div>
+                <div class="answer correct">
+                    aktiváciu cesty k multicastovej skupine
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">ODMRP na rozdiel od AODV:</div>
+                <div class="answer correct">
+                    implementuje mäkký stav členstva v multicastovej skupine
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Wormhole útok je prevedený tak, že:</div>
+                <div class="answer correct">
+                    dva uzly sú spojené s privátnou linkou s vysokou dátovou priepustnosťou
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Black hole útok je prevedený tak, že:</div>
+                <div class="answer correct">
+                    uzly posielajú RREP, aj keď nepoznajú cestu k cieľovému uzlu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sybil útok je prevedený tak, že:</div>
+                <div class="answer correct">
+                    sú vytvorené fiktívne uzly s cieľom získať proporcionálne väčší prístup k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">SYN útok je prevedený tak, že:</div>
+                <div class="answer correct">
+                    uzol posiela serveru (inému uzlu, ktorý počúva na určitom porte) veľké množstvo SYN paketov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Multicastová adresa má v IPv6 (https://docs.oracle.com/cd/E19253-01/816-4554/ipv6-overview-201/index.html):</div>
+                <div class="answer correct">
+                    prvých 8 bitov nastavených
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 6 END-->
+        <!--        TEST 7 START-->
+        <tr class="new">
+            <td>
+                <div class="question">Či je výkon vysielača optimálny, môžeme zistiť v prípade súvislosti siete tak, že použijeme:</div>
+                <div class="answer correct">
+                    binárne hľadanie na hranách k susedom a následne použijeme hľadanie do šírky pre overenie vlastnosti
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri použití protokolu LEACH, nech pravdepodobnosť, že sa uzol stane líder, je 0.1 z celej populácie. Pri voľbe lídrov v 10. kole je pravdepodobnosť, že sa uzol stane lídrom:</div>
+                <div class="answer correct">
+                    1.0
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri použití protokolu SPAN, užitočnosť uzla je definovaná ako:</div>
+                <div class="answer correct">
+                    pomer počtu párov neprepojených susedov, ktoré tento uzol prepojí, a počtu všetkých párov susedov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Network time protokol (NTP) posiela čas cez:</div>
+                <div class="answer correct">
+                    UDP
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Hlavný zdroj neistoty pri posielaní dát cez bezdrôtovú sieť je:</div>
+                <div class="answer correct">
+                    prístup k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Zdrojom neistoty pri posielaní dát cez bezdrôtovú sieť NIE je:</div>
+                <div class="answer correct">
+                    šírenie signálu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Záujem je v riadenej difúzií preposielaný cez:</div>
+                <div class="answer correct">
+                    broadcast
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Riadená difúzia je:</div>
+                <div class="answer correct">
+                    protokol, ktorý využíva všetko v ostatných odpovediach
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri RBS poznajú uzly:</div>
+                <div class="answer correct">
+                    len rozdiel lokálnych časov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Protokoly http, https, smtp, ssh, ftp patria do:</div>
+                <div class="answer correct">
+                    aplikačnej vsrtvy
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 7 END-->
+        <!--        TEST 8 START-->
+        <tr class="new">
+            <td>
+                <div class="question">REST API je:</div>
+                <div class="answer correct">
+                    architektúra a v závislosti od implementácie môže byť na jednej alebo viacerých vrstvách OSI referenčného modelu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Interakciu protokolov môžeme testovat pomocou ANOVA s použitím (http://stre.mcomputing.eu/papers/LA-UR-03-1537.pdf):</div>
+                <div class="answer correct">
+                    spätnej eliminácie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">N ľudí potrebuje prístup k studni, ale pri studni môže byť v tom istom čase len jeden z nich. Najvhodnejší protokol resp. prístup pre riadenie prístupu k studni je:</div>
+                <div class="answer correct">
+                    exponenciálne čakanie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Data fusion je:</div>
+                <div class="answer correct">
+                    spájanie dát pochádzajúcich z rôznych senzorov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri efektívnom výpočte min. výkonu potrebného pre prepojenie uzlov tak, aby bola splnená podmienka súvislosti grafu je potrebné:</div>
+                <div class="answer correct">
+                    overiť súvislosť grafu v polynomiálnom čase
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri efektívnom výpočte min. výkonu potrebného pre prepojenie uzlov nie je množina hrán vstupom algoritmu, pretože:</div>
+                <div class="answer correct">
+                    hrany sa vypočítajú
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri posielaní dát na server, pričom schopnosť servera prijímať dáta je obmedzená, je na riadenie toku dát najvhodnejšie použiť protokol resp. prístup:</div>
+                <div class="answer correct">
+                    riadenie veľkosti okna zahltenia, pričom veľkosť okna je aspoň 2
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri posielaní dátového paketa z Marsu na Zem použijeme:</div>
+                <div class="answer correct">
+                    protokol bez ACK, radšej pošleme dátový paket viacnásobne
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Nech zisk izotropnej antény je 0 dBm (jednotkový zisk). Ak namiesto izotropnej antény použijeme smerovú anténu, pri rovnakej pozorovanej sile signálu vo vzdialenosti d, zisk smerovej antény je (v smere šírenia signálu): (len 3 odpovede)</div>
+                <div class="answer correct">
+                    väčší
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Mechanizmus "watchdog" je možné nahradiť:</div>
+                <div class="answer correct">
+                    použitím ACK cez dva skoky (hops)
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 8 END-->
+        <!--        TEST 9 START-->
+        <tr class="new">
+            <td>
+                <div class="question">Nevýhoda modelu Random waypoint modelu je:</div>
+                <div class="answer correct">
+                    výber rýchlosti z rovnomerného rozdelenia
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri kaskádnej klasifikácii (aspoň 2 klasifikátory), účelom prvého klasifikátora je energeticky efektívna detekcia:</div>
+                <div class="answer correct">
+                    normálneho správania
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Monotónna vlastnosť v zmysle riadenia topológie je:</div>
+                <div class="answer correct">
+                    graf je súvislý
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Protokol ARIADNE vyžaduje:</div>
+                <div class="answer correct">
+                    každý uzol používa vlastnú inštanciu protokolu TESLA
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Protokol ARIADNE:</div>
+                <div class="answer correct">
+                    znižuje nároky na výmenu kľúčov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Synchronizácia času je v ad hoc sieťach najmenej predvídateľne ovplyvnená:</div>
+                <div class="answer correct">
+                    exponenciálnym čakaním
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade, že nie je využívaný mechanizmus "fast retransmit", musí posielajúci uzol čakať na:</div>
+                <div class="answer correct">
+                    time-out vypočítaný pomocou RTT
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade, že v ad hoc sieti potrebujem zapínať/vypínať uzly tak, aby aspoň 1 sused každého uzla bol zapojený, použijem protokol:</div>
+                <div class="answer correct">
+                    LEACH
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sekvenčné číslo je pri využití v smerovaní:</div>
+                <div class="answer correct">
+                    inicializované na ľubovolnú hodnotu a pre daný uzol ostane nezmenené
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V budove s prekážkami je možné očakávať, že zmena sily signálu so vzdialenosťou d je:</div>
+                <div class="answer correct">
+                    väčšia ako 1/d^2 (väčší útlm sily signálu ako 1/d^2)
+                </div>
+            </td>
+        </tr>
+        <!--        TEST 9 END-->
+        <tr class="new">
+            <td>
+                <div class="question">0.0001 mW je v prepočte na dBm:</div>
+                <div class="answer correct">
+                    -40 dBm <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak je exponenciálne čakanie neúspešné, veľkosť okna čakania (CW) sa zdvojnásobí a doba čakania na prístup k médiu bude:</div>
+                <div class="answer correct">
+                    kratšia, dlhšia alebo rovnaká
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak modelujeme závislosť sily signálu od vzdialenosti pomocou free-space modelu, sila signálu so vzdialenosťou pri 5Ghz frekvencii v porovnaní s 2.4 GHz opadá:</div>
+                <div class="answer correct">
+                    viac
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak je použitý protokol IEEE 802.11, dátový paket je v prípade neúspešného exponenciálneho čakania:</div>
+                <div class="answer correct">
+                    zmazaný
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri použití RTS/CTS je skrytý terminál:</div>
+                <div class="answer correct">
+                    eliminovaný
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sila signálu -1000dBm je v prepočte na mW</div>
+                <div class="answer correct">
+                    10^-100 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
+                </div>
+            </td>
+        </tr>
+<!--        TEST2016 START-->
+        <tr class="new">
+            <td>
+                <div class="question">Exponential back-off zaručuje:</div>
+                <div class="answer maybe-correct">
+                    Po neúspešnom prístupe k médiu je ďalší prístup k médiu odložený
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Použitie random waypoint modelu môže mať za následok:</div>
+                <div class="answer correct">
+                    Uzly budú spomaľovať
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Expanding ring search sa použije:</div>
+                <div class="answer correct">
+                    Ak nie je prijatý RREP do určitého času
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">AODV využíva:</div>
+                <div class="answer correct">
+                    Expanding ring search
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TCP využíva:</div>
+                <div class="answer correct">
+                    Fast recovery
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Slow-start je súčasťou:</div>
+                <div class="answer correct">
+                    TCP
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Max. veľkosť UDP paketu je:</div>
+                <div class="answer maybe-correct">
+                    64kB
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MACT je potrebný na:</div>
+                <div class="answer correct">
+                    Aktiváciu cesty v MAODV.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Útlm (fading) je možné modelovať pomocou:</div>
+                <div class="answer correct">
+                    Rayleighovho rozdelenia
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Max. d2-párovanie je max. počet súčasne komunikujúcich párov uzlov:</div>
+                <div class="answer wtf">
+                    A. Pri využití RTS/CTS <br>
+                    B. Bez využitia RTS/CTS <br>
+                    C. Pri využití RREQ/RREP <br>
+                    D. Bez využitia RREQ/RREP <br>
+                </div>
+            </td>
+        </tr>
+<!--        TEST2016 END -->
+<!--        SK2016-OT START -->
+        <tr class="new">
+            <td>
+                <div class="question">MACT je využívaný v</div>
+                <div class="answer correct">
+                    MAODV
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V. prípade, že uzol využívajúci protokol AODV nepotreboval využiť techniku expanding ring search, tak možný dôvod je</div>
+                <div class="answer maybe-correct">
+                    bol prijatý ACK
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Výhodou protokolu Leach je jeho podpora</div>
+                <div class="answer correct">
+                    rotácie lídrov zhlukov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pomocou d2-párovania je možné modelovať</div>
+                <div class="answer correct">
+                    kapacitu siete
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MAODV je</div>
+                <div class="answer correct">
+                    smerovací protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MAODV využíva</div>
+                <div class="answer correct">
+                    strom (z definície acyklický)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Po úspešnom prístupu k médiu pri použití exponenciálneho čakania (exponential back-off) môže nasledovať</div>
+                <div class="answer correct">
+                    RTS alebo DATA
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">d2-párovanie má vlastnosť takú, že koncové uzly hrán majú vzájomnú vzdialenosť</div>
+                <div class="answer correct">
+                    aspoň 2 hrany
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Okno zahltenia (TCP congestion window) sa po potvrdení jedného dátového paketu vo fáze slow start zmení</div>
+                <div class="answer maybe-correct">
+                    x2 alebo +1
+                </div>
+                <div class="answer maybe-incorrect">
+                    +1
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TCP fast retransmit sa udeje po prijatí</div>
+                <div class="answer correct">
+                    3 duplikátnych ACK
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">exponenciálne čakanie nikdy neuplatní</div>
+                <div class="answer maybe-correct">
+                    RTS/CTS nikdy neuplatní
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Po poslaní RTS sa čaká na</div>
+                <div class="answer correct">
+                    CTS od všetkých susedov (susedov = uzol s ktorým vie priamo komunikovať)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade free-space šírenia signálu je vo vzdialenosti 62.8m od vysielača s izotropnou anténou a stratami L=1 sila signálu pre 1GHZ a 100GHZ frekvencie</div>
+                <div class="answer maybe-correct">
+                    väčšia v prípade 1GHZ
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Dilatačný pomer (dilation factor) v zmysle problému smerovania je pomer medzi</div>
+                <div class="answer correct">
+                    cenou smerovania skutočnou a optimálnou cestou
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">DSR je na rozdiel od AODV</div>
+                <div class="answer correct">
+                    source route protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">-120dBm v prepočte na Watt</div>
+                <div class="answer correct">
+                    je viac ako 0W, ale menej ako 1W <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak sa sila signálu zmení z -120dBm na -130dBm v prepočte na Watt sa sila signálu</div>
+                <div class="answer correct">
+                    zníži /10 (deleno 10) <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Po poslaní RREQ cez broadcast musí uzol čakať na</div>
+                <div class="answer maybe-correct">
+                    niečo iné
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Útok "čierna diera" (black hole) je založený na</div>
+                <div class="answer correct">
+                    poslaní RREP na každý prijatý RREQ
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uveď aspoň 7 smerovacích protokolov pre adhoc siete (stačí uviesť ich akronymy)</div>
+                <div class="answer correct">
+                    DSDV, AODV, DSR, MAODV ,OLSR, HSR, TORA, LAR
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak P je monotónna vlastnosť, ktorú je možné testovať v polynomiálnom čase, a náš optimalizačný cieľ je TotalPower potom časová zložitosť riadenia topológie ad hoc siete je (vyberte najpresnejšie ohraničenie)</div>
+                <div class="answer correct">
+                    NP-tažký
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Hodnota čakania (duration value) je využívaná v pri výpočte</div>
+                <div class="answer correct">
+                    optimálneho prístupu k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uved príklad source route smerovacieho protokolu</div>
+                <div class="answer correct">
+                    DSR
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri kaskádnej klasifikácii (aspoň 2 klasifikátory), účelom prvého klasifikátora je energicky efektívna detekcia</div>
+                <div class="answer maybe-correct">
+                    normálneho správania
+                </div>
+                <div class="answer maybe-incorrect">
+                    chýb
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TDMA je</div>
+                <div class="answer correct">
+                    MAC protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Najväčším zdrojom neurčitosti pri posielaní správ (ich oneskorenia) je</div>
+                <div class="answer correct">
+                    prístup k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aplikácia techniky "watchdog" znemožňuje</div>
+                <div class="answer correct">
+                    prechod bezdrôtového interface-u do sleep módu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Izotropná anténa je</div>
+                <div class="answer correct">
+                    idealistická anténa vyžarujúca rovnako všetkými smermi
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uveď všetky vrstvy OSI referenčného modelu v správnom poradí</div>
+                <div class="answer correct">
+                    L7: aplikačná <br>
+                    L6: prezentačná <br>
+                    L5: relačná <br>
+                    L4: transportná <br>
+                    L3: sieťová <br>
+                    L2: linková <br>
+                    L1: fyzická <br>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli základné mechanizmy protokolu AODV</div>
+                <div class="answer correct">
+                    Ad hoc on demand distance vector - je to reaktivny protokol, hop by hop (uklada si v hlavicke paketu len ID cieloveho uzla a nasledujuceho) Na hladanie cesty pouziva RREQ, ktory posle cez broadcast, aby sa nesirili duplikatne RREQ pouziva sekvencne cisla. Ak pride RREQ k hladanemu uzlu (alebo k uzlu ktory pozna cestu) tak sa cez unicast odosle RREP. Ak niektory uzol zisti ze nema spojenie s druhym uzlom (udrzba ciest) posle RRER
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uved aspoň 3 rozdielne vlastnosti IPV4 a IPV6</div>
+                <div class="answer correct">
+                    IPV4 používa 32bit IP adresy, IPV6 128bit <br>
+                    IPV6 sa da vyuzit v IoT, vacsi adresny priestor <br>
+                    IP paket IPV6 obsahuje extended headers, hop limit, nema kontrolnu sumu (spolieha sa na MAC) <br>
+                </div>
+            </td>
+        </tr>
+<!--        SK2016-OT END -->
+<!--        OTHERS START -->
+        <tr class="new">
+            <td>
+                <div class="question">Použitie RTS/CTS eliminuje:</div>
+                <div class="answer correct">
+                    kolízie dátových paketov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri otázke s monotónnou P vlastnosťou ak je</div>
+                <div class="answer maybe-correct">
+                    Total Power = NP-ťažký <br>
+                    MaxPower = polynomiálny <br>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uveď príklad interakcie protokolov a navrhnite spôsob jej potlačenia resp. eliminácie</div>
+                <div class="answer correct">
+                    prepojenie sietovej vrstvy (AODV) s linkovou (802.11): v sietovej vrstve posielame Hello pakety, kvoli zisteniu dosiahnutia uzla. Tuto aktivitu uzla mozeme overit aj z RTS/CTS paketov. Takto nepotrebujeme posielat dalsi paket. - implementovat by sa to dalo zmenou rozhrani pre jednotlive vrstvy
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Chamtivý (greedy) algoritmus pre max. d2-párovanie ako prvú vyberie hranu, ktorá má:</div>
+                <div class="answer maybe-correct">
+                    najmenší počet susedov, ale väčší ako 2
+                </div>
+                <div class="answer maybe-correct">
+                    najmenší počet susedov, ale väčší ako 0
+                </div>
+                <div class="answer maybe-incorrect">
+                    najväčší počet susedov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">NAV (Network allocation vector) je dátová štruktúra využívaná v</div>
+                <div class="answer correct">
+                    IEEE 802.11 pri výpočte optimálneho prístupu k médiu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Použitie RTS/CTS eliminuje</div>
+                <div class="answer maybe-correct">
+                    kolízie dátových paketov
+                </div>
+                <div class="answer maybe-incorrect">
+                    skrytý terminál
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Kaskádna klasifikácia, ktorá podporuje energickú efektívnosť detekcie chýb vyžaduje, aby (predpokladáme kaskádu s min. 2 klasifikátormi)</div>
+                <div class="answer correct">
+                    prvý klasifikátor v kaskáde bol najmenej presný a zároveň najviac energicky efektívny
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Počet vrstiev v OSI je</div>
+                <div class="answer correct">
+                    7, Aplikačná, Prezenčná, Relačná, Transportná, Sieťová, Linková, Fyzická
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Senzorové siete sú špecifickým druhom Ad Hoc sietí. Ich hlavný význam je</div>
+                <div class="answer correct">
+                    Monitorovať fyzické a/alebo enviromentálne podmienky, napr. ako teplotu, vlhkosť, rýchlosť
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Úloha MAC protokolu je</div>
+                <div class="answer correct">
+                    rezervovať bezdrôtové médium pre použitie jedným z uzlov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">IEEE 802.11 využíva nasledovný handshake</div>
+                <div class="answer correct">
+                    RTS-CTS-DATA-ACK
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Úlohou JAIN Fairness merania je</div>
+                <div class="answer correct">
+                    merať priradenie zdrojov k rozličným uzlom
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Nájdenie maximálneho D2-matching je:</div>
+                <div class="answer correct">
+                    NP-complete
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">AODV je:</div>
+                <div class="answer correct">
+                    adaptive routing protocol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">DSR používa:</div>
+                <div class="answer correct">
+                    PREQ-RREP handshake
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Na predídenie problému rátania do nekonečna (count-to-infinity problem), smerovací protokol môže:</div>
+                <div class="answer correct">
+                    priradiť sekvenčné čísla k aktualizáciám smerovacích tabuliek
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">LAR schéma 1:</div>
+                <div class="answer correct">
+                    dopredné (forwards) PREQ len v rámci žiadanej zóny
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TORA využíva smerovanie (routing):</div>
+                <div class="answer correct">
+                    cez distribuovaný výpočet orientovaného acyklického grafu, zakoreneného (rooted) v mieste určenia
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">DREAM je založený na pozorovaní, kt.:</div>
+                <div class="answer correct">
+                    čím väčšia je vzdialenosť medzi dvoma uzlami, tým pomalšie sa zdá, že sa hýbu v závislosti na seba
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vďaka dlhodobému vyhodnoteniu Ethernetovej dátovej prevádzky, vedci zistili, že prenos dát má nasledujúcu distribúciu/vzor</div>
+                <div class="answer correct">
+                    Self-silimar (sebe podobný)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MAODV podporuje nasledujúce typy komunikácie:</div>
+                <div class="answer correct">
+                    multicast, unicast, broadcast
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Multicast skupiny (groups) v MAODV sú organizované, ako:</div>
+                <div class="answer correct">
+                    n-árny strom
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Členovia multicast stromu sú:</div>
+                <div class="answer correct">
+                    členovia multicast skupín (groups) a všetkých ostatných uzlov, ktoré musia odovzdať/odoslať paket len v rámci multicast skupiny
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MACT kontrolný paket v MAODV je potrebný na:</div>
+                <div class="answer correct">
+                    aktivovanie jednej z nájdených ciest k najbližšiemu uzlu v multicast strome
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Rushing attack znamená:</div>
+                <div class="answer correct">
+                    vybrané PREQ pakety získajú prioritu, keď sa odovzdajú/zašlú
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TESLA protokol využíva nasledovný mechanizmus:</div>
+                <div class="answer correct">
+                    one-way hash chain (jednosmerný hashový reťazec)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TESLA potrebuje:</div>
+                <div class="answer correct">
+                    voľný čas synchronizácie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Watchdog v Ad Hoc bezdrôtovej sieti je mechanizmus pre:</div>
+                <div class="answer correct">
+                    zaistenie, že kontrolné a dátové pakety (control/data packets kontrola dátových paketov) zámerne neklesnú
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Rozširovanie prstencového (kruhového, ring) vyhľadávania je mechanizmus v rámci</div>
+                <div class="answer correct">
+                    AODV
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri synchronizácii siete senzorov , najväčším zdrojom nedeterminizmu je pravdepodobné, že:</div>
+                <div class="answer correct">
+                    sa posiela, alebo prijíma
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri používaní AODV, NET_DIAMETER je:</div>
+                <div class="answer correct">
+                    najväčšie číslo skokov (hops), kt. RREQs majú povolené preposlať/odoslať
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">RBS je:</div>
+                <div class="answer correct">
+                    imúnny inšpirujúci protokol (immune inspired protocol)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">RBS sa spolieha na:</div>
+                <div class="answer correct">
+                    výpočet posunu hodín (clock drift estimation)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">VBR je dátový prenos, kt.:</div>
+                <div class="answer correct">
+                    je podobný CBR, ale pripojenia sa nezačínajú v rovnaký čas
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">D2- matching môže pomôcť v:</div>
+                <div class="answer correct">
+                    Určení počtu rôznych RTS-CTS-DATA-ACK handshakov, kt. sa môžu vykonať v ten istý čas v sieti
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Každý multicast protokol</div>
+                <div class="answer correct">
+                    NIE je založený na multicast strome, NIE je založený na secure routing protokole, Nevyužíva autentifikovaný broadcast
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Úlohou exponenciálneho Back-off algoritmu pre MAC protokol je</div>
+                <div class="answer correct">
+                    vypočítanie času, počas kt. MAC protokol nemá povolený prístup na rezervovanie si bezdrôtového média
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Účinkom skrytého (hidden terminal) terminálu, môže byť</div>
+                <div class="answer correct">
+                    uzol nebude môcť odoslať dátové pakety
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">MACA využíva</div>
+                <div class="answer correct">
+                    RTS-CTS-DATA handshake
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Závislosť sily signálu a vzdialenosť prijímača-vysielača pri modelovaní s modelom voľného miesta (free-space)rozšírenia/ s modelom šírenia voľným priestorom je</div>
+                <div class="answer correct">
+                    d^-2
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Model náhodného navigačného bodu pracuje nasledovne:</div>
+                <div class="answer correct">
+                    uzol vyberie cieľ a rýchlosť, potom ak dorazí do ciela vyberie nový cieľ a rýchlosť
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberanie signálu (signal fadding) nastáva, keď</div>
+                <div class="answer correct">
+                    prijatý signál bol predmetov reflexie, difrakcie, rozptylu alebo pohybu uzla
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Cieľom kontroly topológie (topology control) je:</div>
+                <div class="answer correct">
+                    priradenie právomoci/sily vysielačom, tak, aby výsledný graf spĺňal určité stanovené vlastnosti
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">ARIADNE a TESLA môžu byť využité na autentifikáciu</div>
+                <div class="answer correct">
+                    PREQ a RREP paketov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri synchronizácii siete senzorov používajúcich tvrdenie MAC protokolov , najväčším zdrojom nedeterminizmu je pravdepodobné, že:</div>
+                <div class="answer correct">
+                    medium acces (pristupenie k mediu)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">S-MAC používa:</div>
+                <div class="answer correct">
+                    snímanie dopravcu (carrier sensing), RTS-CTS-DATA-ACK a harmonogram spánok-vstanie (sleep-wakeup schedule)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">LEACH otáča hlavy klastra/bloku (cluster) pretože:</div>
+                <div class="answer correct">
+                    cluster heads (hlavy bloku) využívajú viac baterky a spotreba musí byť férová
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak uzol zvolí samého seba za cluster head, potom je to oznámené pomocou</div>
+                <div class="answer correct">
+                    CSMA
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">RBS je</div>
+                <div class="answer correct">
+                    časovo synchronizovaný protokol alebo Škótska národná banka
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">LEACH je</div>
+                <div class="answer correct">
+                    MAC protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">ARIADNE je:</div>
+                <div class="answer correct">
+                    smerovací (routing) protokol
+                </div>
+            </td>
+        </tr>
+<!--        OTHERS END-->
+
+<!--        SK2018-RT START-->
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli broadcast. Uveď 1 príklad, kde sa používa</div>
+                <div class="answer correct">
+                    (Druh smerovacej schémy) Odosielanie paketu z jedného uzla všetkým uzlom v sieti. Napr. pri odosielaní hello paketov pri AODV, pre údržbu siete
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Na ktorej vrstve sa nachádza TCP? </div>
+                <div class="answer correct">
+                    Transportnej.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme TCP?</div>
+                <div class="answer correct">
+                    Tento protokol zaručuje doručenie paketov. Je schopný ich doručiť v správnom poradí, v prípade, ak by boli pakety doručené pomocou rôznych ciest alebo v prípade zahltenia. (Je to obojsmerný protokol s riadením toku a zahltenia. Rozdeľuje pakety na menšie časti, tzv. segmenty.)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ako využíva TCP okno zahltenia?</div>
+                <div class="answer correct">
+                    Týmto oknom určuje max. počet segmentov, ktoré môžu byť poslané bez potvrdenia (bez ACK) Po každom prijatom ACK je okno zahltenia posunuté o jednu pozíciu.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ako ovplyvňuje zahltenie veľkosť okna zahltenia?</div>
+                <div class="answer correct">
+                    Dynamicky sa mení so zahltením siete.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme “fast retransmit”?</div>
+                <div class="answer correct">
+                    Ak je prijatý segment mimo správnu sekvenciu, nastane duplikát ACK. Ak sú prijaté 3 a viac ACK, potom je segment opätovne poslaný. Nečaká na time-out.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme duplikát ACK?</div>
+                <div class="answer correct">
+                    Aby sa zistilo, ktorý segment nebol prijatý, t.j. u ktorého segmentu došlo k chybe odoslania, k prerušeniu.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme MAC protokol? </div>
+                <div class="answer correct">
+                    Keď potrebujeme prístup k médiu. /nie som si istá, či to stačí/ MAC protokol umožňuje používateľom zdieľať rádiové spektrum, ktoré má obmedzenú kapacitu. Na rezervovanie média
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Kedy MAC protokol nepotrebujeme?</div>
+                <div class="answer correct">
+                    Na vykonávanie samotného odosielania paketov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli exponenciálne čakanie</div>
+                <div class="answer correct">
+                    Nastáva vtedy, ak je kanál obsadený. Používa sa, aby sa zamedzilo pokusom spojenia v tom istom čase. Čas ďalšieho spojenia sa teda vyberá náhodne. Na začiatku máme nejaký blok, z ktorého sa vyberie náhodná hodnota času. Ak sa paket znova nepodarí odoslať, čiže kanál je stále obsadený, blok sa zdvojnásobí a znovu sa z neho vyberie náhodná hodnota času (určuje po akom čase sa znova odošle paket). Takto sa to stále opakuje pokiaľ je kanál obsadený a blok nedosiahne maximálnu dĺžku.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme RTS/CTS? </div>
+                <div class="answer correct">
+                    Používame ich pri riešení problému skrytého terminálu CSMA. Riešením je MACA, ktoré využíva RTS/CTS. Napr. máme tri uzly A, B, C. Kde A, C počujú B, ale nepočujú sa navzájom. Obidva uzly chcú poslať dátový paket Bčku. Začne A. Pošle Bčku RTS (ready to send). Ak je Bčko pripravené prijať dátový paket, pošle broadcastom CTS (clear to send). A aj C CTS príjmu. Cčko oneskorí svoje posielanie paketov a Ačko pošle Bčku paket.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme smerovací protokol?</div>
+                <div class="answer correct">
+                    Je potrebný na výpočet cesty pre dátové pakety. (z počiatočného uzla do cieľového uzla)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aký druh smerovacieho protokolu je AODV</div>
+                <div class="answer correct">
+                    AODV je reaktívny protokol, využíva distance-vector smerovanie, hop-by-hop smerovanie.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ako využíva AODV RREQ/RREP pri hľadaní cesty?</div>
+                <div class="answer correct">
+                    Ak uzol potrebuje poslať dátový paket a cesta do cieľového uzla nie je známa, tak cez broadcast pošle RREQ. Každý RREQ má svoje sekvenčné číslo. Len prvý prijatý RREQ s daným sekvenčným číslom je preposlaný ďalej cez broadcast. Uzol, ktorý pozná cestu k cieľovému uzlu alebo samotný cieľový uzol, odpovedá s RREP na prijatý RREQ. RREP je poslaný cez unicast.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli “expanding ring.”</div>
+                <div class="answer correct">
+                    je optimalizácia, ktorá umožňuje preposlanie RREQ len do určitej vzdialenosti od zdrojového uzla.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo nastane, ak uzol nikdy neprijme RREP? </div>
+                <div class="answer maybe-correct">
+                    nastane zmazanie paketu. RERR by sa mal poslať v prípade, že nejaká cesta už nie je platná
+                </div>
+                <div class="answer maybe-incorrect">
+                    Odošle sa RERR
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Zadefinuj d2-párovanie</div>
+                <div class="answer correct">
+                    Nech G(V, E) je neorientovaný graf, ktorý reprezentuje bezdrôtovú sieť. Max. d2-párovanie: nájdi najväčšiu množinu hrán E', kde E' je podmnožina E, takú, že žiadna z dvoch hrán v E' nie je spojená hranou z E. (to mám len odkopčené z p2_01 29str)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli súvis d-2 párovania a kapacity siete. </div>
+                <div class="answer wtf">
+                    Fuck this shit
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli chamtivý (greedy) algoritmus pre výpočet d2-párovania. </div>
+                <div class="answer correct">
+                    1. Opakuj nasledujúce kroky dovtedy, pokým E(G) = {}. <br>
+                    2. Zvoľ hranu e takú, že r(e) = min r(e'); e' patrí E(G). <br>
+                    3. Pridaj e do E' a zmaž všetky hrany v E(G) do vzdialenosti 2. r(e) = r(u) + r(v); u,v sú uzly, r(u) je stupeň uzla u. O(1) aproximácia. <br>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli RED(Random early detection)</div>
+                <div class="answer correct">
+                    Random early detection: Pre každý prichádzajúci paket sa vypočíta veľkosť fronty (ako exponenciálny vážený kĺzavý priemer). <br>
+                    Ak je táto vypočítaná veľkosť fronty väčšia ako minimum a menšia ako maximum paketovej fronty, nový paket je zmazaný s nejakou pravdepodobnosťou p.  <br>
+                    Ak je veľkosť väčšia ako maximum paketovej fronty, nové prijaté pakety sú ihneď zmazané. <br>
+                    Ak by bola vypočítaná veľkosť fronty menšia ako minimum, žiadne pakety nie sú zmazané. <br>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme RED?</div>
+                <div class="answer correct">
+                    Keďže má každý uzol paketovú frontu, obmedzený buffer pre prijaté pakety, potrebujeme túto frontu nejakým spôsobom monitorovať a uvoľňovať ju. Koriguje teda posielanie paketov. Garantuje maximálnu veľkosť fronty a zabezpečuje menej re-synchronizácie.
+                </div>
+            </td>
+        </tr>
+<!--        SK2018-RT END-->
+<!--        SK2017-RT START-->
+        <tr class="new">
+            <td>
+                <div class="question">Uveď aspoň 5 smerovacích protokolov (ich akronymy) pre adhoc siete</div>
+                <div class="answer correct">
+                    AODV, DSR, TORA, LAR, OLSR
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uveď príklad zdrojového (source route) smerovacieho protokolu</div>
+                <div class="answer correct">
+                    DSR (Dynamic source routing)
+                </div>
+            </td>
+        </tr>
+        <!--        SK2017-RT END-->
+        <!--        SK2016-RT START-->
+        <tr class="new">
+            <td>
+                <div class="question">15dBm</div>
+                <div class="answer correct">
+                    je viac ako 0W, ale menej ako 1W
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Po neúspešnom prístupu k médiu pri použití exponenciálneho čakania (exponential back-off) bude dĺžka nasledovného čakania vždy</div>
+                <div class="answer correct">
+                    rovnaká, kratšia alebo dlhšia
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aproximácia d2-párovania vyžaduje zoradenie hrán podľa súčtu stupňa ich koncových uzlov</div>
+                <div class="answer wtf">
+                    A. vzostupne. <br>
+                    B. zostupne. <br>
+                    C. náhodne. <br>
+                    D. binárne. <br>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V rovnakej vzdialenosti od vysielača s izotropnou anténou je sila signálu vypočítaná pomocou free-space a two-ray modelov, kde v prípade two-ray modelu je vysielač aj prijímač vo výške 1m</div>
+                <div class="answer maybe-correct">
+                    väčšia v prípade free-space
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade modelovania pohybu uzlov pomocou random-waypoint modelu je spomaľovanie pohybu uzlov možné eliminovať, ak (pozn. speed = rýchlosť)</div>
+                <div class="answer maybe-correct">
+                    speedmax = PI* Speedmin
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">VBR (Variable bit rate) je možné modelovať ako </div>
+                <div class="answer correct">
+                    Poissonove rozdelenie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri simulácii ad hoc siete je potrebný výpočet sily signálu, čo vyžaduje výpočet vzájomnej vzdialenosti uzlov. Pre efektívny výpočet vzdialenosti sa využíva</div>
+                <div class="answer correct">
+                    quad-strom
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">DSDV je</div>
+                <div class="answer correct">
+                    proaktivny protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V prípade, že uzol využívajúci protokol AODV neprijme napriek využitia techniky expanding ring search žiaden RREP, potom nasleduje</div>
+                <div class="answer correct">
+                    RERR
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Problém počítania donekonečna (count-to-infinity problem) je možné vyriešiť zavedenim </div>
+                <div class="answer correct">
+                    logického času pre smerovacie tabulky
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V MAODV je group Hello implementovaná ako</div>
+                <div class="answer correct">
+                    nevyžiadaný RREP
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V ODMRP je MACT implementovaný ako</div>
+                <div class="answer correct">
+                    ODMRP nevyužíva MACT
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sybil útok v ad hoc sieťach je založený na</div>
+                <div class="answer correct">
+                    vytváraní fiktívnych identít
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uved príklad monotónnej vlastnosti v zmysle problému riadenia topológie</div>
+                <div class="answer correct">
+                    vlastnosť P je monotónna, ak ostane platná aj po zväčšení výkonu vysielača, pričom výkony ostatných vysielačov ostanú nezmenené. Príklad monotónnej vlastnosti? Súvislosť
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak P je monotónna vlastnosť, ktorú je možné testovať v polynomiálnom čase, a náš optimalizačný cieľ je MaxPower potom časová zložitosť riadenia topológie ad hoc siete je</div>
+                <div class="answer correct">
+                    polynomialny
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">NAV (Network allocation vector) je dátová štruktúra využívaná v </div>
+                <div class="answer maybe-correct">
+                    IEEE 802.11 pri výpočte optimálneho prístupu k médiu.
+                </div>
+                <div class="answer maybe-incorrect">
+                    IEEE 802.11 pri výpočte optimálnej veľkosti exponenciálneho čakania
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uveď príklad definície jednosmernej hašovacej funkcie (one-way hash function)</div>
+                <div class="answer correct">
+                    SHA2
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Nevýhodou protokolov, ktoré využívajú zhlukovanie (clustering) uzlov je</div>
+                <div class="answer correct">
+                    potreba striedania lídrov zhlukov.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ak má dátový paket veľkosť väčšiu ako RTS threshold potom sa použije</div>
+                <div class="answer correct">
+                    RTS/CTS
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">NTP využíva na synchronizáciu</div>
+                <div class="answer correct">
+                    analyzu RTT
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TORA je</div>
+                <div class="answer correct">
+                    smerovaci protokol
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">TORA využíva</div>
+                <div class="answer correct">
+                    orientovaný acyklický graf
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli základné mechanizmy protokolu RBS Reference Broadcast Synchronization</div>
+                <div class="answer correct">
+                    čas sa synchronizuje na zaklade odchyliek od susednych uzlov. <br>
+                    1. 2 a viac uzlom sa odosle referency beacon <br>
+                    2. Kazdy uzol si zaznaci cas prijatia, vzhladom k svojmu lokalnemu casu 3. Uzly si navzajom vymenia casy o prijati beacon (lokalna synchhronizacia casu) <br>
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vysvetli prečo ARIADNE vyžaduje autentifikáciu pomocou protokolu TESLA</div>
+                <div class="answer correct">
+                    Zabezpečuje protokol DSR. Zabezpečuje RREQ a RREP aby nebolo možné pozmeniť smerovacu informáciu. (posledna videoprednaska 13minuta) (Na generovanie kľúčov, ktoré sú zverejňované v krátkych časových intervaloch.)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Uveď príklad monotónnej vlastnosti v zmysle problému riadenia topológie</div>
+                <div class="answer correct">
+                    súvislosť
+                </div>
+            </td>
+        </tr>
+<!--        SK2016-RT END-->
+<!--        <tr class="new">-->
+<!--            <td>-->
+<!--                <div class="question">Miesto pre novu otazku</div>-->
+<!--                <div class="answer correct">-->
+<!--                    Miesto pre odpoved-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+
+        </tbody>
+    </table>
+
+    <div class="modal fade bd-example-modal-lg" id="convertor-modal" tabindex="-1" role="dialog" aria-labelledby="convertor-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe width="100%" height="700" src="https://www.rapidtables.com/convert/power/" title="Convertor"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvoriť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer>
+    <div class="ml-1" style="text-align: center;">
+        <div class="mb-1 p-1" style="background-color: var(--correct-color);">
+            Správne
+        </div>
+        <div class="mb-1 p-1" style="background-color: var(--maybe-correct-color);">
+                Asi správne
+            </div>
+        <div class="mb-1 p-1" style="background-color: var(--maybe-incorrect-color);">
+                Skôr nesprávne
+        </div>
+        <div class="mb-1 p-1" style="background-color: var(--wtf-color);">
+                Pičovina
+        </div>
+        <div class="mb-1 p-1">
+            <button id="hide-footer-button" type="button" class="btn btn-secondary">Skryť</button>
+        </div>
+    </div>
+</footer>
+
+<script>
+    $(document).ready(function () {
+
+        $("#hide-footer-button").on("click", function () {
+            $("footer").hide();
+        });
+
+        $("#normalize-check-box").on("change", function () {
+            $(this).attr("disabled", true);
+            // $("#normalize-check-box-wrapper").hide();
+            $("#main-table tr").each(function () {
+                let normalizedText = $(this).html().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                $(this).html(normalizedText);
+            });
+        });
+
+        $("#search-input").on("keyup", function () {
+            let shouldNormalize = $("#normalize-check-box").prop("checked");
+
+            let value;
+            if(shouldNormalize){
+                value = $(this).val().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            } else {
+                value = $(this).val()
+            }
+            // let value = $(this).val().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            // let value = $(this).val().toLowerCase();
+
+            if (value.length === 0) {
+                $('mark').contents().unwrap();
+            }
+
+            if (value.length !== 0 && value.length < 4) {
+                return;
+            }
+
+            $("#main-table tr").filter(function () {
+                $(this).find($('mark')).contents().unwrap();
+
+                let b = $(this).text().indexOf(value) > -1;
+                $(this).toggle(b);
+                if (b && value && value.length > 3) {
+                    $(this).html($(this).html().replace(value, "<mark>" + value + "</mark>"));
+                }
+            });
+
+            $("#main-table tr:visible:odd").addClass("odd");
+            $("#main-table tr:visible:odd").removeClass("even");
+            $("#main-table tr:visible:even").addClass("even");
+            $("#main-table tr:visible:even").removeClass("odd");
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
