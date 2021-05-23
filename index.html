@@ -157,7 +157,7 @@
         </div>
         <div class="col-sm-8">
             <input id="search-input" class="form-control mr-sm-2" type="search"
-                    placeholder="Hľadať (filtrovanie začne pri dĺžke > 3, ESC - zrušiť)" aria-label="Search">
+                   placeholder="Hľadať (ESC - zrušiť)" aria-label="Search">
         </div>
         <div class="col-sm-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor</button>
@@ -959,7 +959,7 @@
                 </div>
             </td>
         </tr>
-<!--        TEST2016 START-->
+        <!--        TEST2016 START-->
         <tr class="new">
             <td>
                 <div class="question">Exponential back-off zaručuje:</div>
@@ -1043,8 +1043,8 @@
                 </div>
             </td>
         </tr>
-<!--        TEST2016 END -->
-<!--        SK2016-OT START -->
+        <!--        TEST2016 END -->
+        <!--        SK2016-OT START -->
         <tr class="new">
             <td>
                 <div class="question">MACT je využívaný v</div>
@@ -1307,8 +1307,8 @@
                 </div>
             </td>
         </tr>
-<!--        SK2016-OT END -->
-<!--        OTHERS START -->
+        <!--        SK2016-OT END -->
+        <!--        OTHERS START -->
         <tr class="new">
             <td>
                 <div class="question">Použitie RTS/CTS eliminuje:</div>
@@ -1727,9 +1727,8 @@
                 </div>
             </td>
         </tr>
-<!--        OTHERS END-->
-
-<!--        SK2018-RT START-->
+        <!--        OTHERS END-->
+        <!--        SK2018-RT START-->
         <tr class="new">
             <td>
                 <div class="question">Vysvetli broadcast. Uveď 1 príklad, kde sa používa</div>
@@ -1906,8 +1905,8 @@
                 </div>
             </td>
         </tr>
-<!--        SK2018-RT END-->
-<!--        SK2017-RT START-->
+        <!--        SK2018-RT END-->
+        <!--        SK2017-RT START-->
         <tr class="new">
             <td>
                 <div class="question">Uveď aspoň 5 smerovacích protokolov (ich akronymy) pre adhoc siete</div>
@@ -2134,15 +2133,24 @@
                 </div>
             </td>
         </tr>
-<!--        SK2016-RT END-->
-<!--        <tr class="new">-->
-<!--            <td>-->
-<!--                <div class="question">Miesto pre novu otazku</div>-->
-<!--                <div class="answer correct">-->
-<!--                    Miesto pre odpoved-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
+        <!--        SK2016-RT END-->
+        <tr class="new">
+            <td>
+                <div class="question">Príklad otázky</div>
+                <div class="answer correct">
+                    Správna odpoveď
+                </div>
+                <div class="answer maybe-correct">
+                    Asi správna odpoveď
+                </div>
+                <div class="answer maybe-incorrect">
+                    Skôr nesprávna odpoveď
+                </div>
+                <div class="answer wtf">
+                    Pičovina
+                </div>
+            </td>
+        </tr>
 
         </tbody>
     </table>
@@ -2167,13 +2175,13 @@
             Správne
         </div>
         <div class="mb-1 p-1" style="background-color: var(--maybe-correct-color);">
-                Asi správne
-            </div>
+            Asi správne
+        </div>
         <div class="mb-1 p-1" style="background-color: var(--maybe-incorrect-color);">
-                Skôr nesprávne
+            Skôr nesprávne
         </div>
         <div class="mb-1 p-1" style="background-color: var(--wtf-color);">
-                Pičovina
+            Pičovina
         </div>
         <div class="mb-1 p-1">
             <button id="hide-footer-button" type="button" class="btn btn-secondary">Skryť</button>
@@ -2189,12 +2197,15 @@
         });
 
         $("#normalize-check-box").on("change", function () {
-            $(this).attr("disabled", true);
-            // $("#normalize-check-box-wrapper").hide();
-            $("#main-table tr").each(function () {
-                let normalizedText = $(this).html().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                $(this).html(normalizedText);
-            });
+            if($(this).prop("checked")){
+                $("#main-table tr").each(function () {
+                    let normalizedText = $(this).html().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    $(this).html(normalizedText);
+                });
+            } else {
+                location.replace(location.href);
+            }
+
         });
 
         $("#search-input").on("keyup", function () {
@@ -2206,23 +2217,21 @@
             } else {
                 value = $(this).val()
             }
-            // let value = $(this).val().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            // let value = $(this).val().toLowerCase();
 
             if (value.length === 0) {
                 $('mark').contents().unwrap();
             }
 
-            if (value.length !== 0 && value.length < 4) {
-                return;
-            }
+            // if (value.length !== 0 && value.length < 2) {
+            //     return;
+            // }
 
             $("#main-table tr").filter(function () {
                 $(this).find($('mark')).contents().unwrap();
 
                 let b = $(this).text().indexOf(value) > -1;
                 $(this).toggle(b);
-                if (b && value && value.length > 3) {
+                if (b && value && value.length > 2) {
                     $(this).html($(this).html().replace(value, "<mark>" + value + "</mark>"));
                 }
             });
