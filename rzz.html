@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>PShit2</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        :root {
+            --correct-color: #39da5e;
+            --maybe-correct-color: #ffc941;
+            --maybe-incorrect-color: #fa616f;
+            --wtf-color: #a78585;
+        }
+
+        #search-input {
+            width: 100%;
+        }
+
+        body {
+            padding-top: 4.5rem
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        img {
+            max-height: 600px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            /*background-color: black;*/
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: black solid 2px;
+        }
+
+        table tr.even.new {
+            background-color: #d7d6d6;
+        }
+
+        table tr.odd.new {
+            background-color: #88eee4;
+        }
+
+        tr:nth-child(even).new {
+            background-color: #d7d6d6;
+        }
+
+        tr:nth-child(odd).new {
+            background-color: #88eee4;
+        }
+
+        table tr.even {
+            background-color: #a7a7a7;
+        }
+
+        table tr.odd {
+            background-color: #67c9bf;
+        }
+
+        tr:nth-child(even) {
+            background-color: #a7a7a7;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #67c9bf;
+        }
+
+        /*td::first-line {*/
+        /*    font-weight: 700;*/
+        /*}*/
+
+        footer {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            padding-bottom: 2px;
+            /*width: 100%;*/
+            /*height: 30px;*/
+            background-color: white;
+            z-index: 1030;
+        }
+
+        .form-inline {
+            width: 100%;
+        }
+
+        mark {
+            background-color: yellow;
+            color: black;
+            padding: 0;
+        }
+
+        .question {
+            margin-bottom: 5px;
+        }
+
+        .answer {
+            margin-top: 10px;
+            font-size: 25px;
+            padding: 5px;
+        }
+
+        .answer button {
+            float: right;
+            margin-top: -1px;
+        }
+
+        .correct {
+            background-color: var(--correct-color);
+        }
+
+        .maybe-correct {
+            background-color: var(--maybe-correct-color);
+        }
+
+        .maybe-incorrect {
+            background-color: var(--maybe-incorrect-color);
+        }
+
+        .wtf {
+            background-color: var(--wtf-color);
+        }
+
+        label {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-light bg-dark">
+    <form class="form-inline">
+        <div id="normalize-check-box-wrapper" class="col-sm-2">
+            <label for="normalize-check-box">
+                <input id="normalize-check-box" class="form-control mr-sm-2" type="checkbox"
+                       aria-label="Normalizovať text">
+                Normalizovať
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <input id="search-input" class="form-control mr-sm-2" type="search"
+                   placeholder="Hľadať (ESC - zrušiť)" aria-label="Search">
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#convertor-modal">Konvertor
+            </button>
+        </div>
+    </form>
+</nav>
+<main class="container">
+    <table>
+        <tbody id="main-table">
+<!--        RT 2020_5 START-->
+        <tr class="new">
+            <td>
+                <div class="question">Rozhodnite či je graf štíhly alebo je možné vynechať niektorú trojicu bez zmeny jeho významu.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img001.jpg" alt="img001">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo hovori RDFS axioma? rdf:type rdfs:domain rdfs: Resource.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img002.jpg" alt="img002">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo hovori RDFS axioma?
+                    rdfs:domain rdfs:range rdfs:Class.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img003.jpg" alt="img003">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Dané sú RDF-grafy Ga H: G)
+                    :Fero : pozna : 1.
+                    : Fero pozna :2.
+                    :1 : pozna :3.
+                    H)
+                    : Fero : pozna
+                    :2
+                    :2 : pozna :1.
+                </div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img004.jpg" alt="img004">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Dané sú RDF-grafy G a H: :Fero :vidi :1.
+                    _: 1 :vidi :2.
+                    H)
+                    : Fero :vidi :2.
+                    :1 : vidi :2.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img005.jpg" alt="img005">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V ktorom jazyku možné vyjadriť nasledujúce tvrdenie Nikto nepozná zahradníkovho vraha.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img006.jpg" alt="img006">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V ktorom jazyku možné vyjadriť nasledujúce tvrdenie Palo tvrdí, že zjedol palacinku, ktorú pripravila Anna.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img007.jpg" alt="img007">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V ktorom jazyku možné vyjadriť nasledujúce tvrdenie Nikto neverí, že záhradnika zavraždil Poirot.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img008.jpg" alt="img008">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V ktorom jazyku možné vyjadriť nasledujúce tvrdenie Každý je dietatom svojej matky.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img009.jpg" alt="img009">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo je nasledujúci DL výraz? Vcita.SciFi(ADAM)</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img010.jpg" alt="img010">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo je nasledujúci DL výraz? (Vcita.( autor.{Tolkien}})(ADAM)</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img011.jpg" alt="img011">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo je nasledujúci DL výraz? Func(maMatku)</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img012.jpg" alt="img012">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo je nasledujúci DL výraz? (amaDieta.( amaDieta.{JANO}))(ADAM)</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img013.jpg" alt="img013">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberte vetu, ktorá najlepšie vystihuje význam DL-výrazu apozna.{MISO}</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img014.jpg" alt="img014">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberte vetu, ktorá najlepšie vystihuje význam DL-výrazu pozna.(-{MISO})</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img015.jpg" alt="img015">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberte vetu, ktorá najlepšie vystihuje význam DL-výrazu Vcita.SciFi(ADAM)</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img016.jpg" alt="img016">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberte vetu, ktorá najlepšie vystihuje význam DL-výrazu Muz o Vpozna. 1</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img017.jpg" alt="img017">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberte ktorá z axiom hovorí, že definičný obor vztahu pozna je Clovek.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img018.jpg" alt="img018">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Vyberte ktorá z axiom hovorí, že Eva nie je matkou Adama.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img019.jpg" alt="img019">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">ktorý DL bol užitý pre vyjadernie nasledujúcich faktov maMatku o maMatku- surodenec
+                    Funct(maMatku)</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img020.jpg" alt="img020">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">ktorý DL jazyk bol použitý pre vyjadernie nasledujúcich faktov maDieta maPotomka
+                    Trans(maPotomka)
+                    {EVA} 3 maDieta -Clovek</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img021.jpg" alt="img021">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Nech p je rola. Formálne definujte sémantiku výrazu (očakávam niečo ako: { X E A; Sy e C and (x,y) er })</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img022.jpg" alt="img022">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Stručne vysvetlite čo je internalizácia</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img023.jpg" alt="img023">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Študentov, ktorí majú aspoň jeden predmet</div>
+
+                <div class="question-image">
+
+                </div>
+                <div class="answer correct">
+                    Student and maPredmet min 1
+                    PORIK
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">študentov, ktorí majú iba predmet RZZ alebo LOG.</div>
+
+                <div class="question-image">
+
+                </div>
+                <div class="answer correct">
+                    Student and maPredmet some ({LOG, RZZ})
+                    PORIK
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Učitelov, ktorí prednášajú Porikovi.</div>
+
+                <div class="question-image">
+
+                </div>
+                <div class="answer correct">
+                    Ucitel and prednasa some (inverse maPredmet some {PORIK})
+                    MRKVICKA
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Napište RDF-dokument turtle formáte vyjadrujúci nasledujúce informácie. Pokiaľ to je možné použite skrátenú syntax. Tam kde je to vhodné použite terminy zo slovníkov RDF resp. RDFS.
+                    Prefixy pre menné priestory nemusite deklarovat'.
+                    Peter je zákusok a pije kávu.
+                    Fero je zákusok.</div>
+
+                <div class="question-image">
+
+                </div>
+                <div class="answer correct">
+                    rzz:Fero rzz: je rzz: zakusok
+                    rzz: Peter rzz: je rzz:zakusok
+                    rzz:Peter rzz:pije rzz: kavu
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ktorý rdfirdfs termin možno použiť na vyjadrenie slovesa je v dole uvedených vetách?</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img024.jpg" alt="img024">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Dané sú RDF-grafy G a H: : Fero : pozna
+                    :1.
+                    :Fero : pozna :2.
+                    _:1 : pozna :2.
+                    H)
+                    :Fero pozna :1.
+                    :1 pozna :1.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img025.jpg" alt="img025">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Dané sú RDF-grafy Ga H: :Fero : pozna :1.
+                    _:2 pozna :Miso.
+                    H)
+                    :Fero pozna :Miso.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img026.jpg" alt="img026">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Rozhodnite či je graf Stihly alebo je možné vynechať niektorú trojicu bez zmeny jeho významu. :1 pozna :3.
+                    : 2 : pozna :3 </div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img027.jpg" alt="img027">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Rozhodnite či je graf štíhly alebo je možné vynechať niektorú trojicu bez zmeny jeho významu. : Fero : pozna :X.
+                    _:X : pozna im.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img028.jpg" alt="img028">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo hovori RDFS axioma? rdf:type rdfs: domain rdfs: Resource.</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img029.jpg" alt="img029">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ktorá RDFS axioma hovorí, že: obor hodnôt každého vztahu je trieda</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img030.jpg" alt="img030">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Dané sú RDF-dokumenty v turtle notácii. Sú nasledujúce tvrdenia o nich pravdivé? rdf:type : Pes.
+                    B : Rex rdf:type : Pes; je "Kost".
+                    C [rdf:type : Pes] : je .
+                    D : Rex : je [].</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img031.jpg" alt="img031">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sú nasledujúce tvrdenia pravdivé?
+                    Každá inštancia RDF-grafu je jeho jednoduchým dôsledkom
+                    RDF-graf je jednoduchým dôsledkom každej svojej instancie
+                    RDF graf je jednoduchým dôsledkom každého svojho podgrafu
+                    Každý podgraf RDF-grafu je jeho jednoduchým dôsledkom</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img032.jpg" alt="img032">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Sú nasledujúce tvrdenia pravdivé?
+                    Literál môže byť na ktoromkoľvek mieste v RDF-trojici
+                    Prázdny uzol môže byť na ktoromkoľvek mieste v RDF-trojici
+                    Dva rôzne retazce môžu predstavat' tú istú hodnotu.
+                    Rôzne resoursy nemusia mať rôzne IRI?</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img033.jpg" alt="img033">
+                </div>
+                <div class="answer correct">
+                    
+                </div>
+            </td>
+        </tr>
+<!--        RT 2020_5 END-->
+        <tr class="new">
+            <td>
+                <div class="question">QQQQQQQ</div>
+
+                <div class="question-image">
+                    <img class="img-fluid" src="images/img000.jpg" alt="img000">
+                </div>
+                <div class="answer correct">
+                    AAAAAAAAAAAA
+                </div>
+            </td>
+        </tr>
+
+
+
+        </tbody>
+    </table>
+
+    <div class="modal fade bd-example-modal-lg" id="convertor-modal" tabindex="-1" role="dialog"
+         aria-labelledby="convertor-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe width="100%" height="700" src="https://www.rapidtables.com/convert/power/"
+                            title="Convertor"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvoriť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer>
+    <div class="ml-1" style="text-align: center;">
+        <div class="mb-1 p-1" style="background-color: var(--correct-color);">
+            Správne
+        </div>
+        <div class="mb-1 p-1" style="background-color: var(--maybe-correct-color);">
+            Asi správne
+        </div>
+        <div class="mb-1 p-1" style="background-color: var(--maybe-incorrect-color);">
+            Skôr nesprávne
+        </div>
+        <div class="mb-1 p-1" style="background-color: var(--wtf-color);">
+            Pičovina
+        </div>
+        <div class="mb-1 p-1">
+            <button id="hide-footer-button" type="button" class="btn btn-secondary">Skryť</button>
+        </div>
+    </div>
+</footer>
+
+<script>
+    $(document).ready(function () {
+
+        $("#hide-footer-button").on("click", function () {
+            $("footer").hide();
+        });
+
+        $("#normalize-check-box").on("change", function () {
+            if ($(this).prop("checked")) {
+                $("#main-table tr").each(function () {
+                    let normalizedText = $(this).html().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    $(this).html(normalizedText);
+                });
+            } else {
+                location.replace(location.href);
+            }
+
+        });
+
+        $("#search-input").on("keyup", function () {
+            let shouldNormalize = $("#normalize-check-box").prop("checked");
+
+            let value;
+            if (shouldNormalize) {
+                value = $(this).val().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            } else {
+                value = $(this).val()
+            }
+
+            if (value.length === 0) {
+                $('mark').contents().unwrap();
+            }
+
+            // if (value.length !== 0 && value.length < 2) {
+            //     return;
+            // }
+
+            $("#main-table tr").filter(function () {
+                $(this).find($('mark')).contents().unwrap();
+
+                let b = $(this).text().indexOf(value) > -1;
+                $(this).toggle(b);
+                if (b && value && value.length > 2) {
+                    $(this).html($(this).html().replace(value, "<mark>" + value + "</mark>"));
+                }
+            });
+
+            $("#main-table tr:visible:odd").addClass("odd");
+            $("#main-table tr:visible:odd").removeClass("even");
+            $("#main-table tr:visible:even").addClass("even");
+            $("#main-table tr:visible:even").removeClass("odd");
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
