@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>PShit2</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        :root {
+            --correct-color: #39da5e;
+            --maybe-correct-color: #ffc941;
+            --maybe-incorrect-color: #fa616f;
+            --wtf-color: #a78585;
+        }
+
+        #search-input {
+            width: 100%;
+        }
+
+        body {
+            padding-top: 4.5rem
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        img {
+            max-height: 600px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            /*background-color: black;*/
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: black solid 2px;
+        }
+
+        table tr.even.new {
+            background-color: #d7d6d6;
+        }
+
+        table tr.odd.new {
+            background-color: #88eee4;
+        }
+
+        tr:nth-child(even).new {
+            background-color: #d7d6d6;
+        }
+
+        tr:nth-child(odd).new {
+            background-color: #88eee4;
+        }
+
+        table tr.even {
+            background-color: #a7a7a7;
+        }
+
+        table tr.odd {
+            background-color: #67c9bf;
+        }
+
+        tr:nth-child(even) {
+            background-color: #a7a7a7;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #67c9bf;
+        }
+
+        /*td::first-line {*/
+        /*    font-weight: 700;*/
+        /*}*/
+
+        footer {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            padding-bottom: 2px;
+            /*width: 100%;*/
+            /*height: 30px;*/
+            background-color: white;
+            z-index: 1030;
+        }
+
+        .form-inline {
+            width: 100%;
+        }
+
+        mark {
+            background-color: yellow;
+            color: black;
+            padding: 0;
+        }
+
+        .question {
+            margin-bottom: 5px;
+        }
+
+        .answer {
+            margin-top: 10px;
+            font-size: 25px;
+            padding: 5px;
+        }
+
+        .answer button {
+            float: right;
+            margin-top: -1px;
+        }
+
+        .correct {
+            background-color: var(--correct-color);
+        }
+
+        .maybe-correct {
+            background-color: var(--maybe-correct-color);
+        }
+
+        .maybe-incorrect {
+            background-color: var(--maybe-incorrect-color);
+        }
+
+        .wtf {
+            background-color: var(--wtf-color);
+        }
+
+        label {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-light bg-dark">
+    <form class="form-inline">
+        <div id="normalize-check-box-wrapper" class="col-sm-2">
+            <label for="normalize-check-box">
+                <input id="normalize-check-box" class="form-control mr-sm-2" type="checkbox"
+                       aria-label="Normalizovať text">
+                Normalizovať
+            </label>
+        </div>
+        <div class="col-sm-8">
+            <input id="search-input" class="form-control mr-sm-2" type="search"
+                   placeholder="Hľadať (ESC - zrušiť)" aria-label="Search">
+        </div>
+    </form>
+</nav>
+<main class="container">
+    <table>
+        <tbody id="main-table">
+
+        <tr class="new">
+            <td>
+                <div class="question">Mikro drony s umelou inteligenciou a ich procesory dokážu reagovať:</div>
+
+                <div class="answer correct">
+                    stokrát rýchlejšie ako človek.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo znamená anglický výraz „maschine learning“?"</div>
+
+                <div class="answer correct">
+                    strojové učenie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ako sa nazýva počítač od IBM, ktorý rozumie ľudskej reči?</div>
+
+                <div class="answer correct">
+                    Watson
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aké je základné kritérium definujúce umelú inteligenciu:</div>
+
+                <div class="answer correct">
+                    schopnosť aplikovať pravidlá na konkrétne situácie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo je najväčšou limitáciou strojového učenia?</div>
+
+                <div class="answer correct">
+                    Nedostatok dát potrebných na trénovanie
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Označte problémy spojené so strojovým učením.</div>
+
+                <div class="answer correct">
+                    a) príčina a dôsledok
+                </div>
+                <div class="answer correct">
+                    b) overlearning
+                </div>
+                <div class="answer correct">
+                    e) moral dilema
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Kedy začalo strojové učenie prenikať do priemyslu?</div>
+
+                <div class="answer correct">
+                    začiatkom 90. rokov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Machine Learning bol na jeho počiatkoch (90 roky) používané na jednoduché úlohy, ako sú napríklad (vyberte správne možnosti):</div>
+
+                <div class="answer correct">
+                    odhadovanie kreditného rizika
+                </div>
+                <div class="answer correct">
+                    triedenie pošty na základe PSČ
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Koľko percentám povolaní hrozí, že budú nahradené strojmi?</div>
+
+                <div class="answer correct">
+                    50
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ktoré parametre boli použité pri učení trasy auta pomocou neurónovej siete ?</div>
+
+                <div class="answer correct">
+                    a)Rýchlosť
+                </div>
+                <div class="answer correct">
+                    b)Smer
+                </div>
+                <div class="answer correct">
+                    c)Vzdialenosť od prekážok
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Pri akých typoch úloh exceluje umelá inteligencia?</div>
+
+                <div class="answer correct">
+                    a) Často sa opakujúcich
+                </div>
+
+                <div class="answer correct">
+                    b) Veľkoobjemových
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Podľa ktorých nasledujúcich parametrov dokáže AI analyzovať a nájsť cieľ?</div>
+
+                <div class="answer correct">
+                    GPS, Sociálne siete, Biometrické dáta, Elektronické hlasovanie,
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V akom období začalo strojové učenie prenikať do priemyslu?</div>
+
+                <div class="answer correct">
+                    začiatok 90. rokov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Termín kognitívna inteligencia (cognitive computing) označuje:</div>
+
+                <div class="answer correct">
+                    AI schopnú komunikovať v ľudskej reči
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">V ktorých kategóriách sa v súčasnosti stroje nevyrovnajú ľuďom? Vyberte správnu odpoveď</div>
+
+                <div class="answer correct">
+                    pri riešení nových úloh,
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aké úlohy dokáže AI riešiť lepšie ako človek?</div>
+
+                <div class="answer correct">
+                    a)Často frekventované problémy
+                </div>
+                <div class="answer correct">
+                    c)Pamätanie veľkého objemu dát
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Medzi zakladné druhy úloh strojového učenia nepatrí</div>
+
+                <div class="answer correct">
+                    krížová validácia
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aké poznáme typy strojového učenia?</div>
+
+                <div class="answer correct">
+                    a) učenie s učiteľom,
+                </div>
+                <div class="answer correct">
+                    b) učenie s odmeňovaním,
+                </div>
+                <div class="answer correct">
+                    d) učenie bez učiteľa
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ako sa nazýva sada algoritmov ktorú používa umelá inteligencia?</div>
+
+                <div class="answer correct">
+                    neurónové siete
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo spôsobuje chybovosť umelej inteligencii?</div>
+
+                <div class="answer correct">
+                    pretrénovanie siete
+                </div>
+                <div class="answer correct">
+                    zlý výber neurónovej sieti
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo dokáže byť AI v niektorých oblastiach nebezpečné?</div>
+
+                <div class="answer correct">
+                    Pretože AI si pri učení dokáže vyvinúť deštrukčné metódy na dosiahnutie cieľa.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Prečo potrebujeme umelú inteligenciu?</div>
+
+                <div class="answer correct">
+                    a) AI potrebujeme na automatizáciu rutinnej práce
+                </div>
+                <div class="answer correct">
+                    b) AI potrebujeme na riešenie zložitých problémov
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Aký typ povolania ma najväčšiu šancu byt nahradeny strojmi/AI?</div>
+
+                <div class="answer correct">
+                    opakujúce sa a veľkokapacitné úlohy (napr. diagnostika, oprava chyb)
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Kto ako prvý zaviedol pojem Artificial Intelligence</div>
+
+                <div class="answer correct">
+                    d) John McCarthy
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ktorý problém dokáže vyriešiť umelá inteligecia? Vyberte správne odpovede!</div>
+
+                <div class="answer correct">
+                    a) Rozpoznávanie rukou písaných znakov
+                </div>
+                <div class="answer correct">
+                    b) Detekcia čiar na cestnej komunikácii
+                </div>
+                <div class="answer correct">
+                    c) Hľadanie optimálnej cesty medzi viacerými bodmi trasy
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Ako sa na nazýva test, ktorého úlohou je rozhodnúť, či je stroj "inteligentný"</div>
+
+                <div class="answer correct">
+                    Turingov test
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Koľko % prác vykonávaných ľuďmi nahradí umelá inteligencia do 15 rokov?</div>
+
+                <div class="answer correct">
+                    40
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Čo je jedným z cieľov organizácie https://autonomousweapons.org ? </div>
+
+                <div class="answer correct">
+                    Zakázať vývoj umelej inteligencie v oblasti medicíny.
+                </div>
+            </td>
+        </tr>
+        <tr class="new">
+            <td>
+                <div class="question">Hlavným komponentom (kľúčovým) pre Machine Learning okrem použitého aloritmu je/sú?</div>
+
+                <div class="answer correct">
+                    veľké množstvo dát
+                </div>
+            </td>
+        </tr>
+<!--        55-->
+        <tr class="new">
+            <td>
+                <div class="question">Prečo je AI, lepšia v porovnaní s človekom, pri diagnostikovaní problémov/symptómov.</div>
+
+                <div class="answer correct">
+                    AI dokáže za krátky čas spracovať veľké množstvo materiálu z ktorého sa dokáže vyhodnitiť situáciu.
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <div class="modal fade bd-example-modal-lg" id="convertor-modal" tabindex="-1" role="dialog"
+         aria-labelledby="convertor-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe width="100%" height="700" src="https://www.rapidtables.com/convert/power/"
+                            title="Convertor"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zatvoriť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer>
+
+</footer>
+
+<script>
+    $(document).ready(function () {
+        $("#normalize-check-box").on("change", function () {
+            if ($(this).prop("checked")) {
+                $("#main-table tr").each(function () {
+                    let normalizedText = $(this).html().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    $(this).html(normalizedText);
+                });
+            } else {
+                location.replace(location.href);
+            }
+
+        });
+
+        $("#search-input").on("keyup", function () {
+            let shouldNormalize = $("#normalize-check-box").prop("checked");
+
+            let value;
+            if (shouldNormalize) {
+                value = $(this).val().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            } else {
+                value = $(this).val()
+            }
+
+            if (value.length === 0) {
+                $('mark').contents().unwrap();
+            }
+
+            // if (value.length !== 0 && value.length < 2) {
+            //     return;
+            // }
+
+            $("#main-table tr").filter(function () {
+                $(this).find($('mark')).contents().unwrap();
+
+                let b = $(this).text().indexOf(value) > -1;
+                $(this).toggle(b);
+                if (b && value && value.length > 2) {
+                    $(this).html($(this).html().replace(value, "<mark>" + value + "</mark>"));
+                }
+            });
+
+            $("#main-table tr:visible:odd").addClass("odd");
+            $("#main-table tr:visible:odd").removeClass("even");
+            $("#main-table tr:visible:even").addClass("even");
+            $("#main-table tr:visible:even").removeClass("odd");
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
